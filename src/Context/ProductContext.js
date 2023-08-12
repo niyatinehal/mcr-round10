@@ -1,10 +1,11 @@
 // ProductContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { inventoryData } from "../database/db";
 
 const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(inventoryData);
 
   useEffect(() => {
     // Retrieve product data from localStorage on page load

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDashboard } from "../Context/StockContext";
 import { inventoryData } from "../database/db";
 import { useNavigate } from "react-router-dom";
+import { useProduct } from "../Context/ProductContext";
 
 export const Products = () => {
-
-  const nav=useNavigate();
+  const nav = useNavigate();
 
   const {
     departmentFilter,
@@ -14,13 +14,15 @@ export const Products = () => {
     sortOption,
     setSortOption,
     setLowStockFilter,
+    selectDepartment,
   } = useDashboard();
+  const { products } = useProduct();
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const departments = ["All departments", "Kitchen", "Clothing", "Toys"];
 
-  const filteredProducts = inventoryData.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     return (
       (departmentFilter === "All departments" ||
         product.department === departmentFilter) &&
@@ -60,7 +62,7 @@ export const Products = () => {
 
         <div>
           <select
-            value={departmentFilter}
+            value={selectDepartment}
             onChange={(e) => setDepartmentFilter(e.target.value)}
             className="border border-solid border-slate-400 rounded"
           >
@@ -83,16 +85,17 @@ export const Products = () => {
           </label>
         </div>
 
-        <div className="border border-solid border-slate-400 px-2 rounded">
+        <div>
           <label>Search:</label>
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-solid border-slate-400 px-2 rounded"
           />
         </div>
         <div className="border border-solid  p-1 bg-blue-500 rounded text-white px-3">
-          <button onClick={()=>nav("/add-product")}>New</button>
+          <button onClick={() => nav("/add-product")}>New</button>
         </div>
       </div>
       <div className="overflow-x-auto overflow-y-auto max-h-screen max-w-screen-lg mx-auto">

@@ -5,9 +5,10 @@ import { useProduct } from "../Context/ProductContext";
 
 const ProductListPage = () => {
   const { products, addProduct } = useProduct();
+  console.log(products);
 
   const [newProduct, setNewProduct] = useState({
-    department: "",
+    department: "Select department",
     name: "",
     description: "",
     price: 0,
@@ -36,28 +37,45 @@ const ProductListPage = () => {
 
   return (
     <div>
-     <form className="flex flex-col text-left p-4">
+      <h1 className="font-bold text-2xl">Add New Products</h1>
+      <form className="flex flex-col text-left p-4 w-1/2 ">
         <label htmlFor="department">Department:</label>
-        <input
-          type="text"
+        <select
           id="department"
+          className="block w-full border p-1 border-solid "
           value={newProduct.department}
-          onChange={(e) => setNewProduct({ ...newProduct, department: e.target.value })}
-        />
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, department: e.target.value })
+          }
+        >
+          <option value="" disabled>
+            Select a department
+          </option>
+          <option value="Kitchen">Kitchen</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Toys">Toys</option>
+          {/* Add more options for other departments */}
+        </select>
 
         <label htmlFor="name">Product Name:</label>
         <input
           type="text"
           id="name"
           value={newProduct.name}
-          onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, name: e.target.value })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
           value={newProduct.description}
-          onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, description: e.target.value })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="price">Price:</label>
@@ -65,7 +83,10 @@ const ProductListPage = () => {
           type="number"
           id="price"
           value={newProduct.price}
-          onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="stock">Stock:</label>
@@ -73,7 +94,10 @@ const ProductListPage = () => {
           type="number"
           id="stock"
           value={newProduct.stock}
-          onChange={(e) => setNewProduct({ ...newProduct, stock: parseInt(e.target.value) })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, stock: parseInt(e.target.value) })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="sku">SKU:</label>
@@ -81,7 +105,10 @@ const ProductListPage = () => {
           type="text"
           id="sku"
           value={newProduct.sku}
-          onChange={(e) => setNewProduct({ ...newProduct, sku: e.target.value })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, sku: e.target.value })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="supplier">Supplier:</label>
@@ -89,7 +116,10 @@ const ProductListPage = () => {
           type="text"
           id="supplier"
           value={newProduct.supplier}
-          onChange={(e) => setNewProduct({ ...newProduct, supplier: e.target.value })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, supplier: e.target.value })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <label htmlFor="imageUrl">Image URL:</label>
@@ -97,7 +127,10 @@ const ProductListPage = () => {
           type="text"
           id="imageUrl"
           value={newProduct.imageUrl}
-          onChange={(e) => setNewProduct({ ...newProduct, imageUrl: e.target.value })}
+          onChange={(e) =>
+            setNewProduct({ ...newProduct, imageUrl: e.target.value })
+          }
+          className="border border-solid border-slate-400 px-2"
         />
 
         <button type="button" onClick={handleAddProduct}>
@@ -111,26 +144,6 @@ const ProductListPage = () => {
           Add
         </button>
       </form>
-
-      {/* Display existing products */}
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>${product.price}</td>
-              <td>{product.stock}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };
